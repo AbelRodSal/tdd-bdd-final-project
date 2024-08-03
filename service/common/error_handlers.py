@@ -42,6 +42,21 @@ def bad_request(error):
     )
 
 
+@app.errorhandler(status.HTTP_401_UNAUTHORIZED)
+def unauthorized_error(error):
+    """Handles unauthorized error with 401_UNAUTHORIZED"""
+    message = str(error)
+    app.logger.error(message)
+    return (
+        jsonify(
+            status=status.HTTP_401_UNAUTHORIZED,
+            error="Unauthorized",
+            message=message,
+        ),
+        status.HTTP_401_UNAUTHORIZED,
+    )
+
+
 @app.errorhandler(status.HTTP_404_NOT_FOUND)
 def not_found(error):
     """Handles resources not found with 404_NOT_FOUND"""
